@@ -33,11 +33,9 @@ final class ViewModel: ObservableObject{
     init(){
         self.pokemonList = pokemonManager.getPokemon()
         networkManager.startLitsenForNetworkConnection{ message in
-            self.isPresented = true
             self.errorMessage = message
-           
-            
-            
+            self.isPresented = true
+            print(message)
         }
     
     }

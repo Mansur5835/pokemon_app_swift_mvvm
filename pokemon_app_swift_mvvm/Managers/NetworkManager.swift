@@ -23,7 +23,6 @@ class NetworkManager{
                 completion("Network is available")
          
             } else{
-               
                 completion("Network is not available")
                 print("internet is off.")
             }
