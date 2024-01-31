@@ -12,6 +12,7 @@ struct ContentView: View {
     @StateObject var vm  = ViewModel()
     
     
+    
     private let ataptiveColumns = [
         GridItem(.adaptive(minimum: 150))
     ]
@@ -37,7 +38,9 @@ struct ContentView: View {
             }
             .searchable(text: $vm.searchText)
         }
-        .environmentObject(vm)
+        .environmentObject(vm).alert(isPresented: $vm.isPresented){
+            Alert(title: Text("Network Status"), message: Text(vm.errorMessage), dismissButton: .default(Text("OK")))
+        }
     }
 }
 

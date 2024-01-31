@@ -9,12 +9,19 @@ import Foundation
 
 
 
+
 final class ViewModel: ObservableObject{
     private let pokemonManager = PokemonManager()
+    private let networkManager = NetworkManager()
+    
     
     @Published var pokemonList = [Pokemon]()
     @Published var pokemonDetails: PokemonDetail?
     @Published var searchText: String =  ""
+    @Published var errorMessage: String = ""
+    @Published var isPresented: Bool = false
+    
+   
     
   
     var filteredPokemon: [Pokemon] {
@@ -25,7 +32,14 @@ final class ViewModel: ObservableObject{
     
     init(){
         self.pokemonList = pokemonManager.getPokemon()
-        startLitsenForNetworkConnection()
+        networkManager.startLitsenForNetworkConnection{ message in
+            self.isPresented = true
+            self.errorMessage = message
+           
+            
+            
+        }
+    
     }
     
     
@@ -58,21 +72,6 @@ final class ViewModel: ObservableObject{
     
     
     
-    
-    func startLitsenForNetworkConnection(){
-        monitor.pathUpdateHandler = {path in
-            if path.status == .satisfied {
-                print("internet is on.")
-            } else{
-                print("internet is off.")
-            }
-        }
-        
-        monitor.start(queue: queue);
-        print("listen started")
-        
-        
-    }
-    
+  
     
 }
